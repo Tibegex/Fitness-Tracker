@@ -14,7 +14,7 @@ module.exports = (app) => {
   app.put("/api/workouts/:workout", ({ params, body }, res) => {
     db.Workout.findOneAndUpdate(
       { _id: params.id },
-      { $push: { excercises: body } },
+      { $push: { exercise: body } },
       { upsert: true, useFindandModify: false },
       (updatedWorkout) => {
         res.json(updatedWorkout);
@@ -22,8 +22,14 @@ module.exports = (app) => {
     );
   });
   app.post("/api/workouts", (req, res) => {
-    db.Workout.create({}).then((newWorkout) => {
-      res.json(newWorkout);
-    });
+    console.log("Your momma is a workout");
+    db.Workout.create({})
+      .then((newWorkout) => {
+        res.json(newWorkout);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
   });
 };
